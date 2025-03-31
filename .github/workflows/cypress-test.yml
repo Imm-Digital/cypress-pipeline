@@ -1,56 +1,44 @@
-# Nome do arquivo: .github/workflows/cypress-tests.yml
-
 name: Cypress Tests
 
-# Quando o workflow será executado
 on:
   push:
-    branches: [ main ]  # Executa em pushes na branch main
+    branches: [ main ]
   pull_request:
-    branches: [ main ]  # Executa em PRs para a branch main
+    branches: [ main ]
 
-# Jobs a serem executados
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest  # Máquina virtual onde os testes rodam
+    runs-on: ubuntu-latest
 
     steps:
-      # Faz checkout do código
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Configura Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'  # Escolha a versão do Node que você usa
-          cache: 'npm'        # Faz cache das dependências
+          node-version: '16'
+          cache: 'npm'
 
-      # Instala dependências
       - name: Install Dependencies
         run: npm ci
 
-      # Executa os testes do Cypress
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v6
         with:
-          browser: chrome    # Navegador para rodar os testes
-          headless: true     # Roda em modo sem interface gráfica
-          start: npm start   # Comando para iniciar sua aplicação (se necessário)
-          wait-on: 'http://localhost:3000'  # Espera a app estar disponível (ajuste a URL)
+          browser: chrome
+          headless: true
 
-      # Opcional: Faz upload dos screenshots em caso de falha
       - name: Upload screenshots
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Atualizado para v4
         with:
           name: cypress-screenshots
           path: cypress/screenshots
 
-      # Opcional: Faz upload dos vídeos dos testes
       - name: Upload videos
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Atualizado para v4
         with:
           name: cypress-videos
           path: cypress/videos
