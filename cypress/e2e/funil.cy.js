@@ -21,7 +21,7 @@ describe("Validação de requests do Google Tag Manager e Google Analytics", () 
       "GET",
       "https://www.googletagmanager.com/gtag/js?id=G-65XLVDHJC2"
     ).as("gtag");
-    cy.visit("/" + utms); // <-- Agora usando caminho relativo
+    cy.visit("http://localhost:3000" + utms)
   });
 
   it("Verifica se GTM e GA carregaram", () => {
