@@ -49,7 +49,7 @@ describe("Validação de requests do Google Tag Manager e Google Analytics", () 
     });
 
     cy.get("@impulseId").then((impulseId) => {
-      cy.url().should("include", "/p2" + utms + impulseId);
+      cy.url().should("include", "http://localhost:3000/p2" + utms + impulseId);
     });
 
     cy.get("select").first().select(2);
@@ -66,7 +66,7 @@ describe("Validação de requests do Google Tag Manager e Google Analytics", () 
     cy.get("button").first().click();
 
     cy.get("@impulseId").then((impulseId) => {
-      cy.url().should("include", "/pv" + utms + impulseId + formfields);
+      cy.url().should("include", "http://localhost:3000/pv" + utms + impulseId + formfields);
     });
 
     cy.wait(2000);
